@@ -1,4 +1,5 @@
 #include "utils.hh"
+#include "stm32f1xx_hal_adc.h"
 #include "types.hh"
 #include <algorithm>
 #include <vector>
@@ -20,4 +21,12 @@ double get_adc_by_average(ADC_HandleTypeDef *hadc, int count, int pick) {
   }
   double average = sum / pick;
   return average;
+}
+
+void switch_adc_channel(ADC_HandleTypeDef *hadc, u32 channel) {
+  ADC_ChannelConfTypeDef config = {0};
+  config.Channel = channel;
+  config.Rank = ADC_REGULAR_RANK_1;
+  config.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  HAL_ADC_ConfigChannel(hadc, &config);
 }

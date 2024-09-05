@@ -35,11 +35,15 @@ void start() {
     aht20.measure();
     bmp280.measure();
 
+    switch_adc_channel(&hadc1, ADC_CHANNEL_1);
     auto ldr = get_adc_by_average(&hadc1);
+    switch_adc_channel(&hadc1, ADC_CHANNEL_2);
+    auto sm = get_adc_by_average(&hadc1);
 
-    std::sprintf(msg, "%.2f %.2f\n%.2f %.2f\n%.2f\n%d", aht20.get_temperature(),
-                 aht20.get_humidity(), bmp280.get_temperature(),
-                 bmp280.get_pressure(), ldr, count);
+    std::sprintf(msg, "%.2f %.2f\n%.2f %.2f\n%.2f %.2f\n%d",
+                 aht20.get_temperature(), aht20.get_humidity(),
+                 bmp280.get_temperature(), bmp280.get_pressure(), ldr, sm,
+                 count);
     ssd1315.display_string(msg);
 
     if (HAL_GPIO_ReadPin(MQ2DO_GPIO_Port, MQ2DO_Pin) == GPIO_PIN_RESET) {
