@@ -47,18 +47,20 @@ void start() {
     auto pr = get_adc_by_average(&hadc1);
     pr = (4095.0 - pr) / 4095.0 * 100;
 
-    auto pr_on = HAL_GPIO_ReadPin(PRDO_GPIO_Port, PRDO_Pin) == GPIO_PIN_RESET
-                     ? "on"
-                     : "off";
+    auto pr_on = HAL_GPIO_ReadPin(PRDO_GPIO_Port, PRDO_Pin) == GPIO_PIN_RESET;
 
-    std::sprintf(
-        msg,
-        "T:%.1fC RH:%.1f%%\nP:%.2f\nIL:%.1f\nSM:%.1f\nPR:%.1f %s\nROUND:%d",
-        aht20.get_temperature(), aht20.get_humidity(), bmp280.get_pressure(),
-        ldr, sm, pr, pr_on, count);
+    auto smoke_on =
+        HAL_GPIO_ReadPin(MQ2DO_GPIO_Port, MQ2DO_Pin) == GPIO_PIN_RESET;
+
+    std::sprintf(msg,
+                 "T:%.1fC RH:%.1f%%\nP:%.2f\nIL:%.1f "
+                 "SMOKE:%s\nSM:%.1f\nPR:%.1f %s\nROUND:%d",
+                 aht20.get_temperature(), aht20.get_humidity(),
+                 bmp280.get_pressure(), ldr, smoke_on ? "on" : "off", sm, pr,
+                 pr_on ? "on" : "off", count);
     ssd1315.display_string(msg);
 
-    if (HAL_GPIO_ReadPin(MQ2DO_GPIO_Port, MQ2DO_Pin) == GPIO_PIN_RESET) {
+    if (smoke_on) {
       HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
       HAL_Delay(100);
       HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
