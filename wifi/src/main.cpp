@@ -9,6 +9,8 @@ const char *password = "12345679";
 const char *serverUrl =
     "https://smart-greenhouse-mcu-course.lnkkerst.me/api/upload";
 
+const char *id = "114514";
+
 WiFiClientSecure wifiClient;
 
 void setup() {
@@ -40,7 +42,7 @@ void loop() {
     return;
   }
 
-  String postData = Serial.readStringUntil('\n');
+  String postData = id + ('\n' + Serial.readStringUntil('\n'));
 
   Serial.println("Post Data: " + postData);
 
