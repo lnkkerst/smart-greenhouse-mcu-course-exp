@@ -79,11 +79,15 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *adcHandle) {
     /**ADC1 GPIO Configuration
     PA1     ------> ADC1_IN1
     PA2     ------> ADC1_IN2
+    PA3     ------> ADC1_IN3
     */
-    GPIO_InitStruct.Pin = LDR_Pin | SM_Pin;
+    GPIO_InitStruct.Pin = LDR_Pin | SM_Pin | PR_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    /* ADC1 interrupt Init */
+    HAL_NVIC_SetPriority(ADC1_2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
     /* USER CODE BEGIN ADC1_MspInit 1 */
 
     /* USER CODE END ADC1_MspInit 1 */
@@ -102,9 +106,12 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef *adcHandle) {
     /**ADC1 GPIO Configuration
     PA1     ------> ADC1_IN1
     PA2     ------> ADC1_IN2
+    PA3     ------> ADC1_IN3
     */
-    HAL_GPIO_DeInit(GPIOA, LDR_Pin | SM_Pin);
+    HAL_GPIO_DeInit(GPIOA, LDR_Pin | SM_Pin | PR_Pin);
 
+    /* ADC1 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(ADC1_2_IRQn);
     /* USER CODE BEGIN ADC1_MspDeInit 1 */
 
     /* USER CODE END ADC1_MspDeInit 1 */

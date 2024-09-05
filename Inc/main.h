@@ -57,12 +57,20 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LED_Pin GPIO_PIN_13
+#define LED_GPIO_Port GPIOC
 #define LDR_Pin GPIO_PIN_1
 #define LDR_GPIO_Port GPIOA
 #define SM_Pin GPIO_PIN_2
 #define SM_GPIO_Port GPIOA
+#define PR_Pin GPIO_PIN_3
+#define PR_GPIO_Port GPIOA
 #define MQ2DO_Pin GPIO_PIN_5
 #define MQ2DO_GPIO_Port GPIOA
+#define BEEPER_PWM_Pin GPIO_PIN_6
+#define BEEPER_PWM_GPIO_Port GPIOA
+#define PRDO_Pin GPIO_PIN_7
+#define PRDO_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
