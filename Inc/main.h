@@ -57,6 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LDR_Pin GPIO_PIN_1
+#define LDR_GPIO_Port GPIOA
+#define SM_Pin GPIO_PIN_2
+#define SM_GPIO_Port GPIOA
 #define MQ2DO_Pin GPIO_PIN_5
 #define MQ2DO_GPIO_Port GPIOA
 
