@@ -13,14 +13,14 @@ private:
   static constexpr uint8_t TRIGGER_MEASURE_CMD = 0xac;
   static constexpr uint8_t RESET_CMD = 0xba;
 
+  float temperature, humidity;
+
   I2C_HandleTypeDef *hi2c;
 
   float calc_humidity(const Data &data) const;
   float calc_temperature(const Data &data) const;
 
 public:
-  float temperature, humidity;
-
   AHT20(I2C_HandleTypeDef *hi2c);
 
   void init();
@@ -28,4 +28,6 @@ public:
   std::tuple<bool, std::array<uint8_t, 6>> read();
   bool measure();
   void reset();
+  float get_temperature() const;
+  float get_humidity() const;
 };

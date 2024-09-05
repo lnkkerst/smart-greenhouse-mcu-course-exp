@@ -84,3 +84,11 @@ float AHT20::calc_temperature(const Data &data) const {
 
   return temperature;
 }
+
+float AHT20::get_humidity() const {
+  return humidity;
+}
+
+float AHT20::get_temperature() const {
+  return temperature;
+}
