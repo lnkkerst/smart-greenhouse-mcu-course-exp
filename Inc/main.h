@@ -71,6 +71,10 @@ void Error_Handler(void);
 #define BEEPER_PWM_GPIO_Port GPIOA
 #define PRDO_Pin GPIO_PIN_7
 #define PRDO_GPIO_Port GPIOA
+#define WIFI_TX_Pin GPIO_PIN_9
+#define WIFI_TX_GPIO_Port GPIOA
+#define WIFI_RX_Pin GPIO_PIN_10
+#define WIFI_RX_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

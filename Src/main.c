@@ -22,6 +22,7 @@
 #include "gpio.h"
 #include "i2c.h"
 #include "tim.h"
+#include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -95,6 +96,7 @@ int main(void) {
   MX_I2C2_Init();
   MX_TIM3_Init();
   MX_ADC1_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   start();

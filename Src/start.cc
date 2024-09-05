@@ -9,9 +9,12 @@
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_gpio.h"
 #include "stm32f1xx_hal_tim.h"
+#include "stm32f1xx_hal_usart.h"
 #include "tim.h"
+#include "usart.h"
 #include "utils.hh"
 #include <cstdio>
+#include <cstring>
 
 void start() {
   int count = 0;
@@ -27,10 +30,10 @@ void start() {
 
   htim3.Instance->CCR1 = 1;
 
+  char msg[256];
+
   while (true) {
     HAL_Delay(500);
-
-    char msg[64];
 
     aht20.measure();
     bmp280.measure();
@@ -72,5 +75,15 @@ void start() {
     }
 
     ++count;
+    if (count >= 10) {
+      count = 0;
+      sprintf(msg,
+              "temperature:%f\thumidity:%f\tpressure:%f\tilluminance:%f\tsoil-"
+              "moisture:%f\tprecipitation:%f\training:%s\tsmoke:%s\n",
+              aht20.get_temperature(), aht20.get_humidity(),
+              bmp280.get_pressure(), ldr, sm, pr, pr_on ? "true" : "false",
+              smoke_on ? "true" : "false");
+      HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), 100);
+    }
   }
 }
