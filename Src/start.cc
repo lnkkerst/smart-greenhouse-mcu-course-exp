@@ -53,11 +53,11 @@ void start() {
         HAL_GPIO_ReadPin(MQ2DO_GPIO_Port, MQ2DO_Pin) == GPIO_PIN_RESET;
 
     std::sprintf(msg,
-                 "T:%.1fC RH:%.1f%%\nP:%.2f\nIL:%.1f "
-                 "SMOKE:%s\nSM:%.1f\nPR:%.1f %s\nROUND:%d",
+                 "T:%.1fC RH:%.1f%%\nP:%.2fPa\nIL:%.1f%%\nSM:%.1f%%\nPR:%.1f%% "
+                 "%s\nSMOKE:%s",
                  aht20.get_temperature(), aht20.get_humidity(),
-                 bmp280.get_pressure(), ldr, smoke_on ? "on" : "off", sm, pr,
-                 pr_on ? "on" : "off", count);
+                 bmp280.get_pressure(), ldr, sm, pr, pr_on ? "on" : "off",
+                 smoke_on ? "on" : "off");
     ssd1315.display_string(msg);
 
     if (smoke_on) {
@@ -71,6 +71,6 @@ void start() {
       HAL_Delay(100);
     }
 
-    count++;
+    ++count;
   }
 }
