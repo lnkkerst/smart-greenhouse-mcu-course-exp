@@ -3,6 +3,7 @@ import { dataProps } from "@/utils";
 import clsx from "clsx";
 import { isNil } from "lodash-es";
 import Link from "next/link";
+import TableNotesCell from "./TableNotesCell";
 
 export type TableProps = Readonly<{
   clients: ClientWithData[];
@@ -20,6 +21,7 @@ function TableRow({ client }: TableRowProps) {
     <tr className="hover">
       <td>{client.id}</td>
       <td>{client.lastUploaded.toLocaleString()}</td>
+      <TableNotesCell id={client.id} notes={client.notes}></TableNotesCell>
       {dataProps.map(({ name }) => {
         let value = data?.[name];
         if (isNil(value)) {
@@ -62,6 +64,7 @@ export default async function Table({ clients }: TableProps) {
       <thead>
         <tr>
           <th>ID</th>
+          <th>备注</th>
           <th>最后更新</th>
           {dataProps.map(({ title, name, unit }) => (
             <th key={name}>{`${title}` + (unit ? `(${unit})` : "")}</th>

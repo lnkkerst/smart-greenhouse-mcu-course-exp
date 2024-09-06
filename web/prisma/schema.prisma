@@ -17,6 +17,8 @@ model Client {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  notes String? @db.VarChar(128)
+
   lastUploaded DateTime @default(now())
   data         Data[]
 

@@ -70,11 +70,11 @@ export default function Charts({ data }: ChartsProps) {
     <div
       className={clsx("grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4")}
     >
-      {dataProps.map(({ name, title, type }) => (
+      {dataProps.map(({ name, title, type, unit }) => (
         <div className="card bg-base-100 pt-4 pl-4" key={name}>
           <LineChart
             data={data}
-            title={title}
+            title={`${title}` + (unit ? `(${unit})` : "")}
             prop={name}
             propType={type}
           ></LineChart>
