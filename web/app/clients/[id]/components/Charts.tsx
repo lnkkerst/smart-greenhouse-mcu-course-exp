@@ -3,6 +3,7 @@ import { DataProp, dataProps } from "@/utils";
 import { Data } from "@prisma/client";
 import clsx from "clsx";
 import ReactEcharts from "echarts-for-react";
+import { isNil } from "lodash-es";
 
 export type ChartsProps = Readonly<{
   data: Data[];
@@ -16,7 +17,7 @@ export type LineChartProps = ChartsProps &
   }>;
 
 export function LineChart({ data, title, prop, propType }: LineChartProps) {
-  const availableData = data.filter(item => item[prop]);
+  const availableData = data.filter(item => !isNil(item[prop]));
   const option = {
     title: {
       text: title,
