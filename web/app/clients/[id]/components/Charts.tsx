@@ -16,7 +16,7 @@ export type LineChartProps = ChartsProps &
   }>;
 
 export function LineChart({ data, title, prop, propType }: LineChartProps) {
-  const availableData = data.filter(item => item[prop]);
+  const availableData = data.filter(item => item[prop]).slice(0, 200);
   const option = {
     title: {
       text: title,
@@ -45,6 +45,8 @@ export function LineChart({ data, title, prop, propType }: LineChartProps) {
     series: [
       {
         type: "line",
+        smooth: true,
+        sampling: "lttb",
         data: availableData.map(item => [item.updatedAt, item[prop]]),
         areaStyle: propType === "boolean" ? {} : undefined,
       },
