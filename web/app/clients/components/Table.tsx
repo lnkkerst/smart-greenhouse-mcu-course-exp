@@ -1,6 +1,8 @@
 import { ClientWithData } from "@/schemas";
+import { dataProps } from "@/utils";
 import clsx from "clsx";
 import { isNil } from "lodash-es";
+import Link from "next/link";
 
 export type TableProps = Readonly<{
   clients: ClientWithData[];
@@ -18,19 +20,8 @@ function TableRow({ client }: TableRowProps) {
     <tr className="hover">
       <td>{client.id}</td>
       <td>{client.lastUploaded.toLocaleString()}</td>
-      {(
-        [
-          "temperature",
-          "humidity",
-          "pressure",
-          "illuminance",
-          "soilMoisture",
-          "precipitation",
-          "raining",
-          "smoke",
-        ] as Array<keyof typeof data>
-      ).map(prop => {
-        let value = data?.[prop];
+      {dataProps.map(({ name }) => {
+        let value = data?.[name];
         if (isNil(value)) {
           value = "无";
         }
@@ -46,12 +37,21 @@ function TableRow({ client }: TableRowProps) {
         return (
           <td
             className={clsx(value === "无" && "text-gray-400 italic")}
-            key={prop}
+            key={name}
           >
             {value}
           </td>
         );
       })}
+      <td>
+        <Link
+          href={`/clients/${client.id}`}
+          prefetch={false}
+          className="btn btn-sm btn-ghost"
+        >
+          查看
+        </Link>
+      </td>
     </tr>
   );
 }
@@ -63,14 +63,10 @@ export default async function Table({ clients }: TableProps) {
         <tr>
           <th>ID</th>
           <th>最后更新</th>
-          <th>温度(°C)</th>
-          <th>湿度(%)</th>
-          <th>压强(Pa)</th>
-          <th>光照(%)</th>
-          <th>土壤湿度(%)</th>
-          <th>降雨指数(%)</th>
-          <th>降雨中</th>
-          <th>烟雾报警</th>
+          {dataProps.map(({ title, name, unit }) => (
+            <th key={name}>{`${title}` + (unit ? `(${unit})` : "")}</th>
+          ))}
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
