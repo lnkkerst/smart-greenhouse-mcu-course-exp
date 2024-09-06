@@ -20,8 +20,8 @@ function TableRow({ client }: TableRowProps) {
   return (
     <tr className="hover">
       <td>{client.id}</td>
-      <td>{client.lastUploaded.toLocaleString()}</td>
       <TableNotesCell id={client.id} notes={client.notes}></TableNotesCell>
+      <td>{client.lastUploaded.toLocaleString()}</td>
       {dataProps.map(({ name }) => {
         let value = data?.[name];
         if (isNil(value)) {
