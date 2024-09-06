@@ -47,7 +47,7 @@ function TableRow({ client }: TableRowProps) {
         <Link
           href={`/clients/${client.id}`}
           prefetch={false}
-          className="btn btn-sm btn-ghost"
+          className="btn btn-sm btn-ghost text-nowrap"
         >
           查看
         </Link>
