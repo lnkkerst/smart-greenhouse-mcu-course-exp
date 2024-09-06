@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "Data" ADD COLUMN     "humidity" DOUBLE PRECISION,
+ADD COLUMN     "illuminance" DOUBLE PRECISION,
+ADD COLUMN     "precipitation" DOUBLE PRECISION,
+ADD COLUMN     "pressure" DOUBLE PRECISION,
+ADD COLUMN     "rain" BOOLEAN,
+ADD COLUMN     "smoke" BOOLEAN,
+ADD COLUMN     "soilMoisture" DOUBLE PRECISION,
+ADD COLUMN     "temperature" DOUBLE PRECISION;

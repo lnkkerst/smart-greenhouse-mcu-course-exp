@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator zod {
+  provider          = "zod-prisma-types"
+  useTypeAssertions = true
+}
+
+model Client {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lastUploaded DateTime @default(now())
+  data         Data[]
+
+  @@index([createdAt(sort: Desc), updatedAt(sort: Desc), lastUploaded(sort: Desc)])
+}
+
+model Data {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId String @db.VarChar(36)
+
+  temperature   Float?
+  humidity      Float?
+  pressure      Float?
+  illuminance   Float?
+  soilMoisture  Float?
+  precipitation Float?
+  raining       Boolean?
+  smoke         Boolean?
+
+  @@index([createdAt(sort: Desc), updatedAt(sort: Desc)])
+}
