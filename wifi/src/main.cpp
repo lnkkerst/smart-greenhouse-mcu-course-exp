@@ -3,14 +3,19 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 
+// 连接的 WiFi 的名称
 const char *ssid = "Pixel 6 Pro";
+// WiFi 密码
 const char *password = "12345679";
 
+// 数据上报的地址
 const char *serverUrl =
     "https://smart-greenhouse-mcu-course.lnkkerst.me/api/upload";
 
+// 设备的 ID
 const char *id = "114514";
 
+// 使用的网络客户端
 WiFiClientSecure wifiClient;
 
 void setup() {
@@ -42,6 +47,7 @@ void loop() {
     return;
   }
 
+  // 从 STM32F103C8T6 接收数据
   String postData = id + ('\n' + Serial.readStringUntil('\n'));
 
   Serial.println("Post Data: " + postData);
