@@ -30,11 +30,21 @@ export async function POST(request: NextRequest) {
         }),
     ),
   );
-  const dbData = await db.data.create({
-    data: {
-      ...fields,
-      clientId: dbClient.id,
-    },
-  });
+  const [dbData] = await db.$transaction([
+    db.data.create({
+      data: {
+        ...fields,
+        clientId: dbClient.id,
+      },
+    }),
+    db.client.update({
+      where: {
+        id: dbClient.id,
+      },
+      data: {
+        lastUploaded: new Date(),
+      },
+    }),
+  ]);
   return NextResponse.json(dbData);
 }
