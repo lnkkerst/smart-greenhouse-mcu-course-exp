@@ -3,6 +3,8 @@ import { RefreshInterval } from "./components/RefreshInterval";
 import Table from "./components/Table";
 import clsx from "clsx";
 
+export const revalidate = 10;
+
 export default async function Home() {
   const clients = await db.client.findMany({
     orderBy: {
